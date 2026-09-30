@@ -1,6 +1,23 @@
-def loss(prediction, target):
-    return (target - prediction) ** 2 #محاسبه فاصله دو عدد
+def neuron(input, weights):
+    sum = (input[0] * weights[0]) + (input[1] * weights[1])
+    return sum
 
-print(loss(0.9, 1.0)) # 0.009999999999999995
-print(loss(0.5, 1.0)) # 0.25
-print(loss(0.1, 1.0))
+def loss(prediction, target):
+    return (target - prediction) ** 2
+
+input = [0.8, 0.2]
+weights = [0.4, 0.1]
+target = 1
+while True:
+    prediction = neuron(input, weights)
+    loss_value = loss(prediction, target)
+    if loss_value < 0.1:
+        break
+    if (target - prediction) > 0:
+        weights[0] += 0.1
+        weights[1] += 0.1
+    else:
+        weights[0] -= 0.1
+        weights[1] -= 0.1
+
+print(weights)
