@@ -1,8 +1,8 @@
 def neuron(inputs, weights):
-    return (
-        inputs[0] * weights[0] +
-        inputs[1] * weights[1]
-    )
+    total = 0
+    for input, weight in zip(inputs, weights):
+        total += input * weight
+    return total
 
 def layer(inputs, weights):
     outputs = []
@@ -18,3 +18,5 @@ weights = [
 ]
 
 outputs = layer(inputs, weights)
+
+print(outputs)
