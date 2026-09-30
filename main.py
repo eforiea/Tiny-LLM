@@ -6,18 +6,22 @@ def loss(prediction, target):
     return (target - prediction) ** 2
 
 input = [0.8, 0.2]
-weights = [0.4, 0.1]
+weights = [0.5, 0.5]
 target = 1
 while True:
     prediction = neuron(input, weights)
     loss_value = loss(prediction, target)
-    if loss_value < 0.1:
+    if loss_value < 0.01:
         break
     if (target - prediction) > 0:
-        weights[0] += 0.1
-        weights[1] += 0.1
+        if input[0] >= input[1]:
+            weights[0] += 0.1
+        else:
+            weights[1] += 0.1
     else:
-        weights[0] -= 0.1
-        weights[1] -= 0.1
+        if input[0] >= input[1]:
+            weights[0] -= 0.1
+        else:
+            weights[1] -= 0.1
 
 print(weights)
