@@ -1,37 +1,46 @@
 def neuron(inputs, weights, bias):
-    total = 0
-    for input, weight in zip(inputs, weights):
-        total += input * weight
+    total = inputs * weights
     return total + bias
 
 def relu(x):
     return max(0, x)
 
-def layer(inputs, weights, bias):
-    outputs = []
-    for w, b in zip(weights, bias):
-        output = neuron(inputs, w, b)
-        output = relu(output)
-        outputs.append(output)
-    return outputs
+def loss(predictions, targets):
+    loss_value = (targets - predictions) ** 2
+    return loss_value
 
-inputs_1 = [0.8, 0.9]
-weights_1 = [
-    [0.5, 0.2],
-    [0.1, 0.8],
-    [0.7, -0.3]
-]
-bias_1 = [0.1, 0.2, 0.3]
+x = 2
 
-layer_1 = layer(inputs_1, weights_1, bias_1)
+w1 = 3
+b1 = 1
 
-inputs_2 = layer_1
-weights_2 = [
-    [0.2, 0.4, 0.1],
-    [0.5, -0.3, 0.7]
-]
-bias_2 = [0.1, 0.2]
+w2 = 4
+b2 = 2
 
-layer_2 = layer(inputs_2, weights_2, bias_2)
+target = 20
+learning_rate = 0.01
 
-print(layer_2)
+while True:
+    z1 = neuron(x, w1, b1)
+    z2 = neuron(z1, w2, b2)
+
+    prediction = z2
+    loss_value = loss(prediction, target)
+
+    print(loss_value)
+    if loss_value < 0.01:
+        break
+
+    w2_gradient = 2*(prediction - target)*z1
+    b2_gradient = 2*(prediction - target)
+    w1_gradiant = 2*(prediction - target)*w2*x
+    b1_gradiant = 2*(prediction - target)*w2
+
+    w2 -= learning_rate * w2_gradient
+    b2 -= learning_rate * b2_gradient
+    w1 -= learning_rate * w1_gradiant
+    b1 -= learning_rate * b1_gradiant
+
+print(f"z1: {z1}")
+print(f"prediction: {prediction}")
+print(f"loss: {loss_value}")
